@@ -2,6 +2,7 @@ package gestion;
 
 import clases.AsociacionImpl;
 import clases.CentroAcogidaImpl;
+import utilidad.Utilidades;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -117,23 +118,26 @@ public class Gestion {
     public boolean ordenarFicheroAsociacion(String ruta){
         File fichero = new File(ruta);
         ArrayList<AsociacionImpl> arrayObjetos = new ArrayList<AsociacionImpl>();
+        Utilidades utilidades = new Utilidades();
         boolean exito = false;
 
         ArrayList<String> arrayRegistros = insertarRegistrosEnArrayList(ruta);
-/*
+
         for(String elemento:arrayRegistros){
             arrayObjetos.add(toObjectAsociacionImpl(elemento));
         }
 
-        Collections.sort(arrayObjetos);
-
+        //Collections.sort(arrayObjetos);
+        utilidades.ordenarArrayList(arrayObjetos);
         arrayRegistros.clear();
-
         for(AsociacionImpl elemento:arrayObjetos){
             arrayRegistros.add(elemento.toString());
         }
-*/
+
+/*
         Collections.sort(arrayRegistros);
+
+ */
         fichero.delete();
 
         //System.out.println("Size array registros: "+arrayRegistros.size());
