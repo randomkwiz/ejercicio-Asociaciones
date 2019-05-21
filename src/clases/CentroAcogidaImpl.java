@@ -59,9 +59,9 @@ public class CentroAcogidaImpl extends AsociacionImpl implements CentroAcogida {
     /*Representacion como cadena*/
     @Override
     public String toString() {
-        return  super.toString()+"\n" +
-                + calificacion +
-                ", " + guerra
+        return  super.toString()+"," +
+                + this.getCalificacion()+
+                "," + this.getGuerra()
                 ;
     }
 }

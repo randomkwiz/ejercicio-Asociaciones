@@ -1,3 +1,5 @@
+import clases.AsociacionImpl;
+
 import java.util.Arrays;
 public class AsociacionImplTest
 {

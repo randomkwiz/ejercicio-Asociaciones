@@ -1,7 +1,5 @@
 package validacion;
-
 import java.util.Scanner;
-
 public class Validaciones
 {
 	public int mostrarMenuPrincipalYValidarOpcion()

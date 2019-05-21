@@ -67,11 +67,6 @@ public class AsociacionImpl implements Comparable<AsociacionImpl>
 	public void setNumeroVoluntarios(int numeroVoluntarios) { this.numeroVoluntarios = numeroVoluntarios; }
 
 	//Critero de comparación por pais y nombre
-	/* Devuelve asociado al nombre
-	 *         -> 0 si ambas asociaciones tienen el mismo pais y nombre
-	 *         -> -1 si el pais es menor (alfabeticamente) o igual al del parametro de entrada, y el nombre es menor
-	 *         -> 1 si el pais es mayor o igual al del parametro de entrada, y el nombre es mayor
-	 */
 	@Override
 	public int compareTo(AsociacionImpl otra)
 	{

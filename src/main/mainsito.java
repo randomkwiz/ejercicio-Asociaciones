@@ -1,4 +1,4 @@
-package main;/* ANALISIS
+/* ANALISIS
  * Se desea realizar un programa para una organización humanitaria, que podrá consultar distintos datos acerca de los centros de acogida que esta organización tiene.
  * 
  * El programa tendrá un menú con las siguientes opciones:
@@ -38,10 +38,8 @@ package main;/* ANALISIS
  * 				* G para Grave
  * 				* D para Desesperada
  * 
- */
-
-import validacion.Validaciones;
-
+ */ 
+ 
 /* PSEUDOCODIGO GENERALIZADO (nivel 0)
  * Inicio
  * 	Mostrar menu principal y validar opcion
@@ -54,7 +52,7 @@ import validacion.Validaciones;
  * 			case 3:
  * 				Mostrar los centros de acogida según una calificación
  * 			case 4:
- * 				Listar los centros de acogida en guerra y pais al que pertenecen
+ * 				Listar los centros de acogida en guerra y pais al que pertenecen *
  * 			case 5:
  * 				Informe con el total de voluntarios por pais
  * 		FinSegun
@@ -71,21 +69,32 @@ import validacion.Validaciones;
   * 	Mientras (opcionSubMenuVoluntarios != volver atras)
   * 		Segun(opcionSubMenuVoluntarios)
   * 			case 1:
-  * 				Total de voluntarios en centros de acogida con pais en guerra
+  * 				Total de voluntarios en centros de acogida con pais en guerra *
   * 			case 2:
-  * 				Total de voluntarios en centros de acogida con pais que no estan en guerra
+  * 				Total de voluntarios en centros de acogida con pais que no estan en guerra *
   * 		FinSegun
-  * 		Mostrar submenuVoluntarios y validar opcionSubMenuVoluntarios
+  * 		Mostrar submenuVoluntarios y validar opcionSubMenuVoluntarios *
   * 	FinMientras
   * Fin
   */
+package main;
+import gestion.Gestion;
+
+import java.util.Scanner;
+import  validacion.*;
+
 public class mainsito
 {
 	public static void main(String[] args)
 	{
-		int opcion, opcionSubMenuVoluntarios;
+		int opcion, opcionSubMenuVoluntarios, totalVoluntariosPais;
 		char calificacion;
+		String pais;
+		String rutaFichero = "./Files/ficheroCentrosAcogida.txt"; 
+		
 		Validaciones validaciones = new Validaciones();
+		Gestion gestion = new Gestion();
+		Scanner teclado = new Scanner(System.in);
 		
 			//Mostrar menu principal y validar opcion
 			opcion = validaciones.mostrarMenuPrincipalYValidarOpcion();
@@ -96,6 +105,15 @@ public class mainsito
 				{
 					case 1:
 						//Calcular total de acogidos en un pais
+						System.out.print("Escribe el nombre del pais: ");
+						pais = teclado.next();
+						
+						totalVoluntariosPais = gestion.calcularTotalAcogidosPais(pais, rutaFichero);
+						
+						if(totalVoluntariosPais >= 0)
+							System.out.println("En " + pais + " hay " + totalVoluntariosPais + " voluntarios.");
+						else
+							System.out.println("En este pais no hay ninguna asociacion registrada");
 						
 						break;
 						
@@ -110,12 +128,16 @@ public class mainsito
 							switch(opcionSubMenuVoluntarios)
 							{
 								case 1:
-									//Total de voluntarios en centros de acogida con pais en guerra
+									//Total de voluntarios en centros de acogida con pais en guerra *
+									System.out.println("Total de voluntarios en centros de acogida con pais en guerra: \n"+gestion.calcularNumeroVoluntariosEnPaisesBelicos(rutaFichero));
+
 									
 									break;
 									
 								case 2:
-									//Total de voluntarios en centros de acogida con pais que no estan en guerra
+									//Total de voluntarios en centros de acogida con pais que no estan en guerra *
+									System.out.println("Total de voluntarios en centros de acogida con paises que no estan en guerra \n"+gestion.calcularNumeroVoluntariosEnPaisesPacificos(rutaFichero));
+									gestion.calcularNumeroVoluntariosEnPaisesPacificos(rutaFichero);
 									
 									break;
 							}
@@ -131,15 +153,20 @@ public class mainsito
 						//Mostrar los centros de acogida según una calificación
 						calificacion = validaciones.calificacion();
 						
+						gestion.imprimirCentroAcogidaPorCalificacion(rutaFichero, calificacion);
+						
 						break;
 						
 					case 4:
-						//Listar los centros de acogida en guerra y pais al que pertenecen
+						//Listar los centros de acogida en guerra y pais al que pertenecen *
+						
+						gestion.imprimirCentroAcogidaEnGuerraYPais(rutaFichero);
 						
 						break;
 						
 					case 5:
-						//Informe con el total de voluntarios por pais
+						//Informe con el total de voluntarios por pais *
+						gestion.imprimirTotalVoluntariosPorPais(rutaFichero);
 						
 						break;
 				}

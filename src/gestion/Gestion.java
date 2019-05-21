@@ -1,5 +1,8 @@
 package gestion;
 
+import clases.AsociacionImpl;
+import clases.CentroAcogidaImpl;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,15 +12,50 @@ import java.util.Collections;
 public class Gestion {
     /*
     * INTERFAZ
-    * Comentario:
-    * Signatura:
+    * Comentario: Dado un string, lo convierte a un objeto de la clase CentroAcogidaImpl
+    * Signatura: public CentroAcogidaImpl toObject (String cadena)
     * Precondiciones:
-    * Entradas:
-    * Salidas:
+    * Entradas: String cadena que sera el objeto hecho cadena
+    * Salidas: objeto tipo CentroAcogidaImpl
     * Entrada/Salida:
-    * Postcondiciones:
+    * Postcondiciones: Asociado al nombre se devolvera un objeto de clase CentroAcogidaImpl o null si hay algun error
     * */
+    public CentroAcogidaImpl toObject (String cadena){
+        CentroAcogidaImpl centro = null;
+        String pais = cadena.split(",")[0];
+        String nombre = cadena.split(",")[1];
+        int totalAcogidos = Integer.parseInt(cadena.split(",")[2]);
+        int numeroVoluntarios = Integer.parseInt(cadena.split(",")[3]);
+        char calificacion = cadena.split(",")[4].charAt(0);
+        char guerra = cadena.split(",")[5].charAt(0);
 
+        centro = new CentroAcogidaImpl(pais, nombre, totalAcogidos, numeroVoluntarios,calificacion, guerra);
+
+        return centro;
+    }
+
+    /*
+     * INTERFAZ
+     * Comentario: Dado un string, lo convierte a un objeto de la clase AsociacionImpl
+     * Signatura: public AsociacionImpl toObjectAsociacionImpl (String cadena)
+     * Precondiciones:
+     * Entradas: String cadena que sera el objeto hecho cadena
+     * Salidas: objeto tipo CentroAcogidaImpl
+     * Entrada/Salida:
+     * Postcondiciones: Asociado al nombre se devolvera un objeto de clase CentroAcogidaImpl o null si hay algun error
+     * */
+    public AsociacionImpl toObjectAsociacionImpl (String cadena){
+        AsociacionImpl as = null;
+        String pais = cadena.split(",")[0];
+        String nombre = cadena.split(",")[1];
+        int totalAcogidos = Integer.parseInt(cadena.split(",")[2]);
+        int numeroVoluntarios = Integer.parseInt(cadena.split(",")[3]);
+
+
+        as = new AsociacionImpl(pais, nombre, totalAcogidos, numeroVoluntarios);
+
+        return as;
+    }
 
     /*
      * INTERFAZ
@@ -68,7 +106,7 @@ public class Gestion {
     /*
      * INTERFAZ
      * Comentario: Ordena un fichero por país y nombre
-     * Signatura: public boolean ordenarFichero(String ruta)
+     * Signatura: public boolean ordenarFicheroAsociacion(String ruta)
      * Precondiciones:
      * Entradas:
      *           String ruta que sera la ruta del fichero a ordenar
@@ -76,12 +114,29 @@ public class Gestion {
      * Entrada/Salida:
      * Postcondiciones: asociado al nombre se devolvera true si ha ordenado correctamente y false si ha habido algun error
      * */
-    public boolean ordenarFichero(String ruta){
+    public boolean ordenarFicheroAsociacion(String ruta){
         File fichero = new File(ruta);
+        ArrayList<AsociacionImpl> arrayObjetos = new ArrayList<AsociacionImpl>();
         boolean exito = false;
 
         ArrayList<String> arrayRegistros = insertarRegistrosEnArrayList(ruta);
+/*
+        for(String elemento:arrayRegistros){
+            arrayObjetos.add(toObjectAsociacionImpl(elemento));
+        }
+
+        Collections.sort(arrayObjetos);
+
+        arrayRegistros.clear();
+
+        for(AsociacionImpl elemento:arrayObjetos){
+            arrayRegistros.add(elemento.toString());
+        }
+*/
         Collections.sort(arrayRegistros);
+        fichero.delete();
+
+        //System.out.println("Size array registros: "+arrayRegistros.size());
         insertarArrayListEnFicheroTexto(arrayRegistros,ruta);
         exito = true;
         return exito;
@@ -136,16 +191,15 @@ public class Gestion {
      * Entrada/Salida:
      * Postcondiciones: asociado al nombre se devolvera un boolean que sera true si se han insertado los registros correctamente y false si no
      * */
-    public boolean insertarArrayListEnFicheroTexto(ArrayList<String> array, String ruta){
+    public boolean insertarArrayListEnFicheroTexto(ArrayList<String> arrayRegistros, String ruta){
 
         File fichero = new File(ruta);
         FileWriter fw = null;
         BufferedWriter bw = null;
         String registro = null;
-        ArrayList<String> arrayRegistros = new ArrayList<String>();
         boolean exito = false;
         try{
-            fw = new FileWriter(fichero);
+            fw = new FileWriter(fichero,true);
             bw = new BufferedWriter(fw);
 
             for(int i = 0; i < arrayRegistros.size(); i ++){
@@ -182,6 +236,7 @@ public class Gestion {
         BufferedReader br = null;
         String registro = null;
         int cantidad = -1;
+        CentroAcogidaImpl centro = null;
 
         try{
             fr = new FileReader(fichero);
@@ -189,12 +244,12 @@ public class Gestion {
 
             while (br.ready()){
                 registro = br.readLine();
-
-                if(registro.split(",")[0].equals("n")){
+                centro = toObject(registro);
+                if(centro.getGuerra() == 'n'){
                     if(cantidad==-1){  //para no tener en cuenta el -1
-                        cantidad = Integer.parseInt(registro.split(",")[3]);
+                        cantidad = centro.getNumeroVoluntarios();
                     }else{
-                        cantidad += Integer.parseInt(registro.split(",")[3]);
+                        cantidad += centro.getNumeroVoluntarios();
                     }
                 }
 
@@ -230,15 +285,15 @@ public class Gestion {
         BufferedReader br = null;
         String registro = null;
         int cantidad = -1;
-
+        CentroAcogidaImpl centro = null;
         try{
             fr = new FileReader(fichero);
             br = new BufferedReader(fr);
 
             while (br.ready()){
                 registro = br.readLine();
-
-                if(registro.split(",")[0].equals("s")){
+                centro = toObject(registro);
+                if(centro.getGuerra() == 's'){
                     if(cantidad==-1){  //para no tener en cuenta el -1
                         cantidad = Integer.parseInt(registro.split(",")[3]);
                     }else{
@@ -274,9 +329,11 @@ public class Gestion {
     public void imprimirCentroAcogidaPorCalificacion(String ruta, char calificacion){
         File fichero = new File(ruta);
         ArrayList<String> registros = insertarRegistrosEnArrayList(ruta);
+        CentroAcogidaImpl centro = null;
 
         for(int i = 0; i < registros.size(); i ++){
-            if(registros.get(i).split(",")[4].equals(calificacion)){
+            centro = toObject(registros.get(i));
+            if(centro.getCalificacion() == calificacion){
                 System.out.println(registros.get(i));
             }
         }
@@ -300,11 +357,12 @@ public class Gestion {
     public void imprimirCentroAcogidaEnGuerraYPais(String ruta){
         File fichero = new File(ruta);
         ArrayList<String> registros = insertarRegistrosEnArrayList(ruta);
-
+        CentroAcogidaImpl centro = null;
         for(int i = 0; i < registros.size(); i ++){
-            if(registros.get(i).split(",")[5].equals("s")){
-                System.out.println("Nombre centro acogida: "+registros.get(i).split(",")[1]);
-                System.out.println("Pais: "+registros.get(i).split(",")[0]);
+            centro = toObject(registros.get(i));
+            if(centro.getGuerra() == 's'){
+                System.out.println("Nombre centro acogida: "+centro.getNombre());
+                System.out.println("Pais: "+centro.getPais());
             }
         }
 
@@ -328,6 +386,7 @@ public class Gestion {
         ArrayList<String> paises = new ArrayList<String>();
         ArrayList<String> registros = insertarRegistrosEnArrayList(ruta);
         int totalVoluntarios = 0;
+        AsociacionImpl asociacion = null;
 
         for(int i = 0; i < registros.size(); i ++){
 
@@ -348,6 +407,9 @@ public class Gestion {
             totalVoluntarios= 0;
 
         }
+
+
+
 
 
     }
