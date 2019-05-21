@@ -65,18 +65,33 @@ public class AsociacionImpl implements Comparable<AsociacionImpl>
 	public void setNombre(String nombre) { this.nombre = nombre; }
 	public void setTotalAcogidos(int totalAcogidos) { this.totalAcogidos = totalAcogidos; }
 	public void setNumeroVoluntarios(int numeroVoluntarios) { this.numeroVoluntarios = numeroVoluntarios; }
-	
+
 	//Critero de comparación por pais y nombre
-	/*
-	* Devuelve 0 si el pais y el nombre de los dos objetos son iguales
-	* Devuelve
-	* */
+	/* Devuelve asociado al nombre
+	 *         -> 0 si ambas asociaciones tienen el mismo pais y nombre
+	 *         -> -1 si el pais es menor (alfabeticamente) o igual al del parametro de entrada, y el nombre es menor
+	 *         -> 1 si el pais es mayor o igual al del parametro de entrada, y el nombre es mayor
+	 */
 	@Override
 	public int compareTo(AsociacionImpl otra)
 	{
 		int ret = -1;
-		System.out.println("compare to en construccion");
-		
+
+		//System.out.println("compareTo en construcción");
+
+		if( this.getPais().equals(otra.getPais()) )
+		{
+			if( this.getNombre().equals(otra.getNombre()) )
+				ret = 0;
+
+			else if ( this.getNombre().compareTo(otra.getNombre()) > 0)
+			ret = 1;
+
+		}
+		else if( this.getPais().compareTo(otra.getPais()) > 0 )
+		{
+			ret = 1;
+		}
 		return ret;
 	}
 	
