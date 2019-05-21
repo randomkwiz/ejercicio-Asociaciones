@@ -1,6 +1,5 @@
 package clases;
 import interfaces.CentroAcogida;
-
 /*
 * Nombre: CentroAcogidaImpl
 * Clase padre: interfaces.Asociacion
@@ -8,8 +7,6 @@ import interfaces.CentroAcogida;
 *       Adicionales:
 *              -Calificacion caracter, consultable y modificable (O optima, N normal, G grave, D desesperada)
 *              -Guerra caracter (s/n), consultable y modificable
-*       Redefinidas:
-*              -totalAcogidos consultable y modificable, entre 10 y 300
 *
 * Restricciones: totalAcogidos estara entre 10 y 300
 *                   calificacion es un caracter O, N, G o D
@@ -19,6 +16,14 @@ import interfaces.CentroAcogida;
 * Los del padre y los suyos propios
 *
 * Constructor: un unico constructor con parametros
+*
+* Metodos interface:
+*   public char getCalificacion();
+    public void setCalificacion(char calificacion) ;
+    public char getGuerra() ;
+    public void setGuerra(char guerra);
+    public int getTotalAcogidos() ;
+    public void setTotalAcogidos(int totalAcogidos);
 * */
 public class CentroAcogidaImpl extends AsociacionImpl implements CentroAcogida {
 
@@ -50,16 +55,8 @@ public class CentroAcogidaImpl extends AsociacionImpl implements CentroAcogida {
         this.guerra = guerra;
     }
 
-   /* @Override
-    public int getTotalAcogidos() {
-        return totalAcogidos;
-    }
 
-    @Override
-    public void setTotalAcogidos(int totalAcogidos) {
-        this.totalAcogidos = totalAcogidos;
-    }
-*/
+    /*Representacion como cadena*/
     @Override
     public String toString() {
         return  super.toString()+"\n" +

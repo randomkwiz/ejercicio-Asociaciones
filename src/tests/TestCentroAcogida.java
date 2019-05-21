@@ -1,10 +1,5 @@
 package tests;
-
-import clases.AsociacionImpl;
 import clases.CentroAcogidaImpl;
-
-
-
 public class TestCentroAcogida {
     public static void main(String[] args) {
         CentroAcogidaImpl ca = new CentroAcogidaImpl("Nuestra Españita","AE",5000,890,'O','n');

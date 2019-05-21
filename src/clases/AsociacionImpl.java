@@ -1,4 +1,5 @@
-package clases;/* ESTUDIO DE INTERFAZ
+package clases;
+/* ESTUDIO DE INTERFAZ
  * Propiedades basicas:
  * 			-> String pais. Consultable y Modificable
  *			-> String nombre. Consultable y Modificable
@@ -74,13 +75,6 @@ public class AsociacionImpl implements Comparable<AsociacionImpl>
 	public int compareTo(AsociacionImpl otra)
 	{
 		int ret = -1;
-		/*
-		if(this.getPais() == otra.getPais() && this.getNombre() == otra.getNombre()){
-			ret = 0;
-		}else if(this.getPais().compareTo(otra.getPais()) == -1 ) && {
-
-		}
-		 */
 		System.out.println("compare to en construccion");
 		
 		return ret;
