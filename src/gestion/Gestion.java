@@ -117,23 +117,24 @@ public class Gestion {
      * */
     public boolean ordenarFicheroAsociacion(String ruta){
         File fichero = new File(ruta);
-        ArrayList<AsociacionImpl> arrayObjetos = new ArrayList<AsociacionImpl>();
+        //ArrayList<AsociacionImpl> arrayObjetos = new ArrayList<AsociacionImpl>();
+        ArrayList<CentroAcogidaImpl> arrayObjetos = new ArrayList<CentroAcogidaImpl>();
         Utilidades utilidades = new Utilidades();
         boolean exito = false;
 
         ArrayList<String> arrayRegistros = insertarRegistrosEnArrayList(ruta);
-
+/*
         for(String elemento:arrayRegistros){
             arrayObjetos.add(toObjectAsociacionImpl(elemento));
         }
-
-        //Collections.sort(arrayObjetos);
-        utilidades.ordenarArrayList(arrayObjetos);
-        arrayRegistros.clear();
+*/
+        Collections.sort(arrayRegistros);
+        //utilidades.ordenarArrayList(arrayObjetos);
+     /*   arrayRegistros.clear();
         for(AsociacionImpl elemento:arrayObjetos){
             arrayRegistros.add(elemento.toString());
         }
-
+*/
 /*
         Collections.sort(arrayRegistros);
 
@@ -168,6 +169,11 @@ public class Gestion {
             fr = new FileReader(fichero);
             br = new BufferedReader(fr);
 
+            if(br.ready()){
+                registro = br.readLine();
+                registro = registro.substring(1,registro.length());
+                arrayRegistros.add(registro);
+            }
             while (br.ready()){
                 registro = br.readLine();
                 arrayRegistros.add(registro);

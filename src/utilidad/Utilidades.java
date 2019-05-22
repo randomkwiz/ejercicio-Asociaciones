@@ -20,7 +20,7 @@ public class Utilidades {
         int n = arraylist.size();
         for (int i = 0; i < n-1; i++)
             for (int j = 0; j < n-i-1; j++)
-                if (arraylist.get(j).compareTo(arraylist.get(j+1)) < 0 )
+                if (arraylist.get(j).compareTo(arraylist.get(j+1)) > 0 )
                 {
                     // swap arr[j+1] and arr[i]
                     AsociacionImpl temp = arraylist.get(j);

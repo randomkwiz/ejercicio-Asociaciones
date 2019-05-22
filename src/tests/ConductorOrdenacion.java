@@ -3,7 +3,6 @@ package tests;
 import clases.AsociacionImpl;
 import gestion.Gestion;
 import interfaces.Asociacion;
-import jdk.swing.interop.SwingInterOpUtils;
 
 import java.io.File;
 import java.util.ArrayList;
